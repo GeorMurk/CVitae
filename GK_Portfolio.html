@@ -259,6 +259,22 @@
     .ref-card p { font-size: .85rem; color: var(--muted); margin-bottom: .15rem; }
     .ref-card a { color: var(--teal); text-decoration: none; font-size: .85rem; }
     .ref-card a:hover { text-decoration: underline; }
+    .ref-contact {
+      filter: blur(4px);
+      user-select: none;
+      pointer-events: none;
+      transition: filter .3s;
+    }
+    .ref-card:hover .ref-contact { filter: blur(4px); }
+    .ref-on-request {
+      font-size: .78rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: .5rem;
+      display: flex;
+      align-items: center;
+      gap: .3rem;
+    }
 
     /* ── FOOTER ── */
     footer {
@@ -753,24 +769,33 @@
   <h2 class="section-title">References</h2>
   <div class="ref-grid">
     <div class="ref-card">
-      <h4>Dr. Halima Saado (PhD)</h4>
-      <div class="ref-role">Ag. Vice-Chancellor, UMMA University</div>
-      <p>Nairobi, Kenya</p>
-      <p>+254 710 315 830</p>
-      <a href="mailto:dr.saadoabdillahi@gmail.com">dr.saadoabdillahi@gmail.com</a>
+      <div class="ref-contact">
+        <h4>Dr. Halima Saado (PhD)</h4>
+        <div class="ref-role">Ag. Vice-Chancellor, UMMA University</div>
+        <p>Nairobi, Kenya</p>
+        <p>+254 710 315 830</p>
+        <p>dr.saadoabdillahi@gmail.com</p>
+      </div>
+      <div class="ref-on-request">🔒 Contacts provided upon request</div>
     </div>
     <div class="ref-card">
-      <h4>Elijah King'ori</h4>
-      <div class="ref-role">Information Management, IFRC Africa Region</div>
-      <p>Addis Ababa, Ethiopia</p>
-      <p>+254 710 675 544</p>
-      <a href="mailto:elijah.kingori@ifrc.org">elijah.kingori@ifrc.org</a>
+      <div class="ref-contact">
+        <h4>Elijah King'ori</h4>
+        <div class="ref-role">Information Management, IFRC Africa Region</div>
+        <p>Addis Ababa, Ethiopia</p>
+        <p>+254 710 675 544</p>
+        <p>elijah.kingori@ifrc.org</p>
+      </div>
+      <div class="ref-on-request">🔒 Contacts provided upon request</div>
     </div>
     <div class="ref-card">
-      <h4>Safia Verjee</h4>
-      <div class="ref-role">Executive Director, International Center for Humanitarian Affairs</div>
-      <p>+254 728 679 644</p>
-      <a href="mailto:verjee.safia@redcross.or.ke">verjee.safia@redcross.or.ke</a>
+      <div class="ref-contact">
+        <h4>Safia Verjee</h4>
+        <div class="ref-role">Executive Director, International Center for Humanitarian Affairs</div>
+        <p>+254 728 679 644</p>
+        <p>verjee.safia@redcross.or.ke</p>
+      </div>
+      <div class="ref-on-request">🔒 Contacts provided upon request</div>
     </div>
   </div>
 </section>
