@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>George Kiragu — Information Management & Data Science</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #1a3a5c;
+      --red:    #c0392b;
+      --red-lt: #e74c3c;
+      --teal:   #16a085;
+      --light:  #f5f7fa;
+      --white:  #ffffff;
+      --text:   #2c3e50;
+      --muted:  #7f8c8d;
+      --border: #dfe6e9;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      color: var(--text);
+      background: var(--light);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 56px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+    nav .brand {
+      color: var(--white);
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+      letter-spacing: .5px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 0;
+    }
+    nav ul a {
+      color: rgba(255,255,255,.82);
+      text-decoration: none;
+      padding: .4rem .75rem;
+      border-radius: 4px;
+      font-size: .85rem;
+      transition: background .2s, color .2s;
+    }
+    nav ul a:hover { background: rgba(255,255,255,.12); color: #fff; }
+    #hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
+    #hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: #fff; margin: 5px 0; border-radius: 2px;
+      transition: .3s;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #2c5f8a 60%, var(--teal) 100%);
+      color: var(--white);
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+    }
+    #hero img {
+      width: 130px; height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid rgba(255,255,255,.6);
+      margin-bottom: 1.2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,.3);
+    }
+    #hero h1 { font-size: 2.4rem; font-weight: 700; margin-bottom: .25rem; }
+    #hero .subtitle {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,.82);
+      margin-bottom: 1.4rem;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .contact-pills {
+      display: flex; flex-wrap: wrap; gap: .55rem;
+      justify-content: center; margin-bottom: 1.2rem;
+    }
+    .contact-pills a {
+      display: flex; align-items: center; gap: .35rem;
+      background: rgba(255,255,255,.15);
+      color: var(--white);
+      text-decoration: none;
+      padding: .35rem .85rem;
+      border-radius: 20px;
+      font-size: .85rem;
+      border: 1px solid rgba(255,255,255,.25);
+      transition: background .2s;
+    }
+    .contact-pills a:hover { background: rgba(255,255,255,.28); }
+    .contact-pills .icon { font-size: 1rem; }
+
+    /* ── MAIN LAYOUT ── */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+    main { padding: 3rem 0; }
+
+    section { margin-bottom: 3rem; }
+    section:last-child { margin-bottom: 0; }
+
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--navy);
+      border-left: 4px solid var(--red);
+      padding-left: .75rem;
+      margin-bottom: 1.4rem;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 1.4rem 1.6rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 6px rgba(0,0,0,.07);
+      border-left: 3px solid transparent;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .card:hover { border-color: var(--red); box-shadow: 0 3px 12px rgba(0,0,0,.11); }
+
+    .card-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; flex-wrap: wrap; gap: .3rem;
+    }
+    .card-header h3 { font-size: 1rem; font-weight: 700; color: var(--navy); }
+    .card-header .date {
+      font-size: .8rem; color: var(--muted);
+      white-space: nowrap; padding-top: 2px;
+    }
+    .card .role {
+      font-size: .9rem; color: var(--red);
+      font-style: italic; margin: .2rem 0 .7rem;
+    }
+    .card .location {
+      font-size: .82rem; color: var(--muted);
+      margin-bottom: .6rem;
+    }
+
+    .card ul { padding-left: 1.2rem; }
+    .card ul li { font-size: .92rem; margin-bottom: .35rem; color: var(--text); }
+
+    .sub-section { margin-bottom: .65rem; }
+    .sub-section .sub-title {
+      font-size: .85rem; font-weight: 700;
+      color: var(--navy); text-decoration: underline;
+      text-underline-offset: 3px; margin-bottom: .25rem;
+    }
+    .sub-section p { font-size: .9rem; color: var(--text); }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .skill-cat {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 1.1rem 1.3rem;
+      box-shadow: 0 1px 6px rgba(0,0,0,.07);
+    }
+    .skill-cat h4 {
+      font-size: .85rem; text-transform: uppercase;
+      letter-spacing: .8px; color: var(--red);
+      margin-bottom: .7rem; font-weight: 700;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .tag {
+      background: var(--light);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: .22rem .7rem;
+      font-size: .8rem;
+      color: var(--text);
+    }
+    .tag.highlight {
+      background: #fdecea;
+      border-color: #f5b7b1;
+      color: var(--red);
+      font-weight: 600;
+    }
+
+    /* ── PUBLICATIONS ── */
+    .pub-list { list-style: none; }
+    .pub-list li {
+      background: var(--white);
+      border-radius: 8px;
+      padding: .9rem 1.2rem;
+      margin-bottom: .7rem;
+      box-shadow: 0 1px 5px rgba(0,0,0,.06);
+      border-left: 3px solid var(--teal);
+      font-size: .92rem;
+    }
+    .pub-list li a {
+      color: var(--navy);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .pub-list li a:hover { color: var(--red); text-decoration: underline; }
+    .pub-year { font-size: .8rem; color: var(--muted); margin-left: .4rem; }
+
+    /* ── AWARDS ── */
+    .award-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    .award-card {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 1.1rem 1.3rem;
+      box-shadow: 0 1px 6px rgba(0,0,0,.07);
+      border-top: 3px solid var(--teal);
+    }
+    .award-card h4 { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: .2rem; }
+    .award-card .org { font-size: .82rem; color: var(--muted); margin-bottom: .3rem; }
+    .award-card a { color: var(--teal); font-size: .85rem; text-decoration: none; font-weight: 600; }
+    .award-card a:hover { text-decoration: underline; }
+
+    /* ── REFERENCES ── */
+    .ref-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1rem;
+    }
+    .ref-card {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
+      box-shadow: 0 1px 6px rgba(0,0,0,.07);
+      border-top: 3px solid var(--navy);
+    }
+    .ref-card h4 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: .15rem; }
+    .ref-card .ref-role { font-size: .85rem; color: var(--red); margin-bottom: .4rem; }
+    .ref-card p { font-size: .85rem; color: var(--muted); margin-bottom: .15rem; }
+    .ref-card a { color: var(--teal); text-decoration: none; font-size: .85rem; }
+    .ref-card a:hover { text-decoration: underline; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,.65);
+      text-align: center;
+      padding: 1.4rem;
+      font-size: .85rem;
+    }
+    footer a { color: rgba(255,255,255,.8); text-decoration: none; }
+    footer a:hover { color: #fff; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 640px) {
+      #hero h1 { font-size: 1.8rem; }
+      nav ul { display: none; flex-direction: column; position: absolute;
+        top: 56px; left: 0; right: 0; background: var(--navy);
+        padding: .5rem 1rem 1rem; box-shadow: 0 4px 8px rgba(0,0,0,.2); }
+      nav ul.open { display: flex; }
+      nav ul li { width: 100%; }
+      nav ul a { display: block; padding: .6rem .75rem; }
+      #hamburger { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="brand" href="#hero">George Kiragu</a>
+  <button id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul id="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#leadership">Leadership</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#awards">Awards</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <img src="George photo.jpg" alt="George Kiragu" onerror="this.style.display='none'" />
+  <h1>Kiragu M. George</h1>
+  <p class="subtitle">Information Management Officer &amp; Data Scientist<br>
+    Humanitarian Sector · Red Cross Red Crescent Movement</p>
+  <div class="contact-pills">
+    <a href="mailto:georgemuraya@gmail.com">
+      <span class="icon">✉</span> georgemuraya@gmail.com
+    </a>
+    <a href="https://linkedin.com/in/george-kiragu" target="_blank" rel="noopener">
+      <span class="icon">in</span> linkedin.com/in/george-kiragu
+    </a>
+    <a href="https://github.com/GeorMurk" target="_blank" rel="noopener">
+      <span class="icon">⌥</span> github.com/GeorMurk
+    </a>
+    <a href="#references">
+      <span class="icon">📍</span> Nairobi, Kenya
+    </a>
+  </div>
+</section>
+
+<main>
+<div class="container">
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <h2 class="section-title">About</h2>
+  <div class="card" style="border-left-color: var(--teal);">
+    <p style="font-size:.95rem; line-height:1.75;">
+      I am an Information Management Officer and Data Scientist with over seven years of
+      experience across the humanitarian sector, primarily within the Red Cross Red Crescent
+      Movement. My work bridges data collection, analysis, GIS mapping, and Cash &amp; Voucher
+      Assistance (CVA) programming, supporting teams across Kenya, Uganda, Ethiopia, Zimbabwe,
+      and Nigeria. I am passionate about translating complex data into actionable insights that
+      improve humanitarian response and community resilience.
+    </p>
+  </div>
+</section>
+
+<!-- ── SKILLS ── -->
+<section id="skills">
+  <h2 class="section-title">Technical Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-cat">
+      <h4>Languages &amp; Packages</h4>
+      <div class="tags">
+        <span class="tag highlight">Python</span>
+        <span class="tag highlight">scikit-learn</span>
+        <span class="tag">pandas</span>
+        <span class="tag">NumPy</span>
+        <span class="tag">SciPy</span>
+        <span class="tag">plotly</span>
+        <span class="tag">matplotlib</span>
+        <span class="tag">folium</span>
+        <span class="tag">Streamlit</span>
+        <span class="tag">Django</span>
+        <span class="tag">LaTeX</span>
+      </div>
+    </div>
+    <div class="skill-cat">
+      <h4>Data &amp; BI Tools</h4>
+      <div class="tags">
+        <span class="tag highlight">PowerBI</span>
+        <span class="tag highlight">Tableau</span>
+        <span class="tag">SQLite</span>
+        <span class="tag">Excel</span>
+        <span class="tag">KoBo Toolbox</span>
+        <span class="tag">ODK</span>
+        <span class="tag">RedRose</span>
+        <span class="tag">121 Platform</span>
+      </div>
+    </div>
+    <div class="skill-cat">
+      <h4>GIS &amp; Mapping</h4>
+      <div class="tags">
+        <span class="tag highlight">QGIS</span>
+        <span class="tag highlight">ArcGIS</span>
+        <span class="tag">Remote Sensing</span>
+        <span class="tag">Folium</span>
+        <span class="tag">GeoDatabases</span>
+      </div>
+    </div>
+    <div class="skill-cat">
+      <h4>Software &amp; Platforms</h4>
+      <div class="tags">
+        <span class="tag">Git</span>
+        <span class="tag">Anaconda</span>
+        <span class="tag">Android Studio</span>
+        <span class="tag">Blender</span>
+        <span class="tag">Inkscape</span>
+        <span class="tag">EspoCRM</span>
+        <span class="tag">Frappe Framework</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPERIENCE ── -->
+<section id="experience">
+  <h2 class="section-title">Experience</h2>
+
+  <!-- IFRC Sudan Crisis -->
+  <div class="card">
+    <div class="card-header">
+      <h3>International Federation of the Red Cross Red Crescent Societies (IFRC)</h3>
+      <span class="date">January 2026 – Present</span>
+    </div>
+    <div class="role">Regional IM Coordinator — Sudan Crisis</div>
+    <div class="location">📍 Chad (Hybrid)</div>
+    <ul>
+      <li>Leading the coordination and production of Information Management in support of National Society and Movement partners.</li>
+      <li>For large-scale emergencies, leading the coordination and streamlining of IM within the operation.</li>
+    </ul>
+  </div>
+
+  <!-- IFRC Nigeria -->
+  <div class="card">
+    <div class="card-header">
+      <h3>International Federation of the Red Cross Red Crescent Societies (IFRC)</h3>
+      <span class="date">June 2025 – September 2025</span>
+    </div>
+    <div class="role">Mapping and Data Visualization Officer</div>
+    <div class="location">📍 Abuja, Nigeria</div>
+    <ul>
+      <li>Curated crisis-affected area geo-database; liaised with Geneva IM Unit and SIMS on remote sensing analysis and products.</li>
+      <li>Supported primary data collection design, implementation, and GIS-based reporting.</li>
+      <li>Documented, archived, and handed over GIS data and analytical processes.</li>
+    </ul>
+  </div>
+
+  <!-- KRCS IM Officer -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Kenya Red Cross Society</h3>
+      <span class="date">January 2024 – Present</span>
+    </div>
+    <div class="role">Information Management Officer</div>
+    <div class="location">📍 Nairobi, Kenya</div>
+    <div class="sub-section">
+      <div class="sub-title">Data Collection and Analysis</div>
+      <p>Collaborated with programme teams (ODM, Global Fund, ICHA) to identify data needs; collected, cleaned and validated data from ODK, Microsoft Forms, and Google Forms; produced PowerBI, Tableau, and Streamlit visualizations for senior management.</p>
+    </div>
+    <div class="sub-section">
+      <div class="sub-title">Information Management Systems</div>
+      <p>Maintained RedRose and 121 beneficiary management platforms; managed SQLite3 databases; trained staff on IM systems.</p>
+    </div>
+    <div class="sub-section">
+      <div class="sub-title">Information Dissemination</div>
+      <p>Designed maps, charts, and dashboards; coordinated content dissemination across X (Twitter), ReliefWeb, institutional website, and LinkedIn.</p>
+    </div>
+    <div class="sub-section">
+      <div class="sub-title">Capacity Building</div>
+      <p>Delivered workshops at HQ, regional, and refugee settings; collaborated with UN agencies on regional reporting and best practices.</p>
+    </div>
+  </div>
+
+  <!-- KRCS CVA IM -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Kenya Red Cross Society</h3>
+      <span class="date">March 2021 – December 2023</span>
+    </div>
+    <div class="role">Cash Voucher Assistance Information Management Officer</div>
+    <div class="location">📍 Nairobi, Kenya</div>
+    <ul>
+      <li><strong>Consultation:</strong> Supported Uganda, Ethiopia, and Zimbabwe NSSs to advocate for IM tools and data needs in CVA Standard Operating Procedures.</li>
+      <li><strong>Training:</strong> Facilitated capacity building on CVA-IM skills and Market Assessments.</li>
+      <li><strong>Operational Support:</strong> Conducted Pre-Crisis and Operational Market Assessments.</li>
+      <li><strong>Data Literacy:</strong> Delivered data protection workshops; provided guidance on IFRC CVA data policy.</li>
+      <li><strong>Data Collection:</strong> Set up KoBo Toolbox/ODK servers; designed assessment, monitoring, and beneficiary registration forms.</li>
+      <li><strong>Data Management:</strong> Designed beneficiary databases; set up RedRose platforms; supported digital payments and data security audits.</li>
+      <li><strong>Data Visualization:</strong> Built dashboards, reports, and maps for programme monitoring; trained staff on PowerBI, Tableau, and Excel.</li>
+    </ul>
+  </div>
+
+  <!-- KRCS Uganda -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Kenya Red Cross Society (KRCS)</h3>
+      <span class="date">June 2022 – July 2022</span>
+    </div>
+    <div class="role">Cash Voucher Assistance IM Officer — International Deployment</div>
+    <div class="location">📍 Uganda</div>
+    <ul>
+      <li>Delivered a CVA-IM training to the Ugandan Red Cross Society CVA, IM, and PMER teams.</li>
+    </ul>
+  </div>
+
+  <!-- Freelance -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Freelance</h3>
+      <span class="date">February 2018 – March 2021</span>
+    </div>
+    <div class="role">Data Scientist</div>
+    <div class="location">📍 Nakuru, Kenya</div>
+    <ul>
+      <li>Developed Machine Learning statistical models and community-focused data analysis.</li>
+      <li>Produced COVID-19 data visualizations using SIR (Susceptible-Infected-Recovered) modelling for humanitarian and health sectors.</li>
+      <li>Built report web pages to showcase findings at conference audiences.</li>
+      <li>Freelanced as a graphic designer; supported Android developers as a front-end app tester.</li>
+    </ul>
+  </div>
+
+  <!-- Oil Crop -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Oil-Crop Development LTD (Faida Seeds)</h3>
+      <span class="date">November 2019 – February 2020</span>
+    </div>
+    <div class="role">Field Supervisor</div>
+    <div class="location">📍 Nakuru, Kenya</div>
+    <ul>
+      <li>Supervised farm preparation activities; tallied daily package production.</li>
+      <li>Managed casual-labour workforce wages; checked invoices, receipts, and issue notes.</li>
+    </ul>
+  </div>
+
+  <!-- Teaching -->
+  <h2 class="section-title" style="margin-top:2rem;">Teaching Experience</h2>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Cash Voucher Assistance for WASH Outcomes — Global Training</h3>
+      <span class="date">May 2023 – Present</span>
+    </div>
+    <div class="role">Training Facilitator</div>
+    <div class="location">📍 International / Global</div>
+    <ul>
+      <li>Facilitate trainings on CVA for WASH outcomes per Global WASH Cluster (GWC) guidelines.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Kenyatta Girls Secondary School</h3>
+      <span class="date">May 2016 – August 2016</span>
+    </div>
+    <div class="role">Teacher — Internship</div>
+    <div class="location">📍 Thika, Kenya</div>
+    <ul>
+      <li>Taught Mathematics and Geography; set, invigilated, and marked internal examinations.</li>
+      <li>Prepared schemes of work and lesson plans.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── EDUCATION ── -->
+<section id="education">
+  <h2 class="section-title">Education</h2>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>WorldQuant University</h3>
+      <span class="date">January 2019 – September 2019</span>
+    </div>
+    <div class="role">Honors Sc. — Machine Learning and Statistical Analysis</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Egerton University, Njoro, Kenya</h3>
+      <span class="date">September 2013 – June 2017</span>
+    </div>
+    <div class="role">B.Ed (Arts) — Mathematics and Geography</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3><a href="https://edge.edx.org/courses/course-v1:NotreDame+GIS000+0000/courseware" target="_blank" rel="noopener" style="color:inherit;">University of Notre Dame</a></h3>
+      <span class="date">September 2017 – January 2018</span>
+    </div>
+    <div class="role">Associate — Geographic Information Systems</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3><a href="https://courses.edx.org/courses/course-v1:HarvardX+SPU29x+3T2016/course/" target="_blank" rel="noopener" style="color:inherit;">HarvardX</a></h3>
+      <span class="date">February 2018 – January 2019</span>
+    </div>
+    <div class="role">Associate — Climate Energy</div>
+  </div>
+</section>
+
+<!-- ── LEADERSHIP ── -->
+<section id="leadership">
+  <h2 class="section-title">Leadership &amp; Community</h2>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>RC RC Cash and WASH Technical Working Group</h3>
+      <span class="date">October 2023 – Present</span>
+    </div>
+    <div class="role"><a href="https://sites.google.com/view/twgcashandwash/about-twg/membership#h.2r4pyiwuqh4k" target="_blank" rel="noopener" style="color:var(--red);">Focal Person — Pilot Projects &amp; Training Workstreams</a></div>
+    <div class="location">📍 Global</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>RC RC Cash and WASH Technical Working Group</h3>
+      <span class="date">May 2023 – October 2023</span>
+    </div>
+    <div class="role">Deputy Focal Person — Pilot Projects &amp; Training Workstreams</div>
+    <div class="location">📍 Global</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Kenya Cash Working Group</h3>
+      <span class="date">March 2021 – Present</span>
+    </div>
+    <div class="role">Member</div>
+    <div class="location">📍 Kenya</div>
+    <ul>
+      <li>Lead of the Information Management Workstream</li>
+      <li>Member of the Minimum Expenditure Basket Workstream</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Kenya Red Cross Society</h3>
+      <span class="date">January 2018 – 2021</span>
+    </div>
+    <div class="role">Volunteer — Data and GIS Focal Person</div>
+    <div class="location">📍 Nakuru, Kenya</div>
+    <ul>
+      <li>Provided support in the creation of the SARS-CoV-2 / COVID-19 dashboard.</li>
+      <li>Supported the COVID-19 Fumigation Pilot Project.</li>
+      <li>Participated in the 2018 Safer Access Review Framework.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Nairobi Women in Machine Learning &amp; Data Science (NWiMLDS)</h3>
+      <span class="date">April 2020 – 2022</span>
+    </div>
+    <div class="role">Co-Organiser</div>
+    <div class="location">📍 Nairobi, Kenya</div>
+    <ul>
+      <li>Co-led <em>Deep Dives</em> — a hands-on programme helping members acquire practical Data Science, ML, and AI skills grounded in their local realities.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3><a href="https://sites.google.com/view/nyc-2020-scikit-sprint/contributors" target="_blank" rel="noopener" style="color:inherit;">scikit-learn Open Source Sprint</a></h3>
+      <span class="date">June 2020 – Present</span>
+    </div>
+    <div class="role">Contributor</div>
+    <div class="location">📍 Global</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Rotaract Club of Menengai</h3>
+      <span class="date">October 2020 – March 2021</span>
+    </div>
+    <div class="role">Public Relations &amp; Design Director · Club Secretary · Board Member</div>
+    <div class="location">📍 Nakuru, Kenya</div>
+  </div>
+</section>
+
+<!-- ── PUBLICATIONS ── -->
+<section id="publications">
+  <h2 class="section-title">Publications</h2>
+  <ul class="pub-list">
+    <li>
+      <a href="https://doi.org/10.1186/s13031-026-00793-2" target="_blank" rel="noopener">Can improved handwashing infrastructure and soap change behavior? Findings from a randomized control study in the Dadaab refugee camp in Kenya</a>
+    </li>
+    <li>
+      <a href="https://aphrc.org/wp-content/uploads/2026/01/3-Jengu-learning-brief.pdf" target="_blank" rel="noopener">Digitization a game changer in humanitarian services and research: Lessons from the Jengu Handwashing study in Dadaab</a>
+      <span class="pub-year">December 2025</span>
+    </li>
+    <li>
+      <a href="https://aphrc.org/wp-content/uploads/2024/09/Jengu-Handwashing-Brief_final.pdf" target="_blank" rel="noopener">Effectiveness of the Jengu Handwashing Facility to Increase Handwashing with Soap among Crisis-Affected Populations in Dadaab Refugee Camp, Kenya</a>
+      <span class="pub-year">September 2024</span>
+    </li>
+    <li>
+      <a href="https://arcg.is/0i4fqm1" target="_blank" rel="noopener">'A child belongs to the community'</a>
+      <span class="pub-year">2025</span>
+    </li>
+    <li>
+      <a href="https://cash-hub.org/resource/articulating-rcrc-movement-experience-and-models-of-collaboration-cash-and-voucher-assistance-and-social-protection-in-turkiye-ukraine-kenya/" target="_blank" rel="noopener">Articulating RCRC Movement experience and models of collaboration – Cash and Voucher Assistance and Social Protection in Türkiye, Ukraine, Kenya</a>
+      <span class="pub-year">2024</span>
+    </li>
+    <li>
+      <a href="https://510.global/2024/06/digital-lifelines-how-the-kenya-red-cross-society-transforms-cash-assistance-with-the-121-platform/" target="_blank" rel="noopener">Digital Lifelines: How the Kenya Red Cross Society Transforms Cash Assistance With the 121 Platform</a>
+      <span class="pub-year">2024</span>
+    </li>
+    <li>
+      <a href="https://www.dropbox.com/s/qs9067pr9a9tok1/2023_WASH Market assessment Taveta report_final.pdf?dl=0" target="_blank" rel="noopener">WASH Market Assessment in Taita Taveta — Kenya</a>
+      <span class="pub-year">2023</span>
+    </li>
+    <li>
+      <a href="https://reliefweb.int/node/3928348" target="_blank" rel="noopener">Pre-Crisis Market Mapping and Analysis Report for Tana River</a>
+      <span class="pub-year">Oct–Nov 2021</span>
+    </li>
+    <li>
+      <a href="https://reliefweb.int/node/3928350" target="_blank" rel="noopener">Pre-Crisis Market Mapping and Analysis Report for West Pokot and Kitui</a>
+      <span class="pub-year">Sept–Oct 2021</span>
+    </li>
+    <li>
+      <a href="https://reliefweb.int/node/3935263" target="_blank" rel="noopener">Pre-Crisis Market Mapping and Analysis Report for Busia County</a>
+      <span class="pub-year">2021</span>
+    </li>
+  </ul>
+</section>
+
+<!-- ── AWARDS ── -->
+<section id="awards">
+  <h2 class="section-title">Awards &amp; Certifications</h2>
+  <div class="award-grid">
+    <div class="award-card">
+      <h4>Mini-Freighter Drop Zone Commander</h4>
+      <div class="org">Wings for Aid — April 2024</div>
+      <a href="https://eu1.documents.adobe.com/public/agreements/view/CBJCHBCAABAAo6EysFkkqA1ey7U1NxoaUMuCQWBD2O_j?type=esign&tsid=CBFCIBAACBSCTBABDUAAABACAABAA8ODh1Bs2tN-cEUzSBNJroR8RWzTYY75BIhLtxFRDbIu8Jewrp6hgiaU25vKXNbO182DWtA--BTfJqve1kL8imSkgsNd0UarFi8_7LTvA0_COfTYD465w0IjtVBvhxc2Y" target="_blank" rel="noopener">View Certificate →</a>
+    </div>
+    <div class="award-card">
+      <h4>Microsoft Global Hackathon 2023</h4>
+      <div class="org">Microsoft — ASAL Population Movement Predictor Modelling — December 2023</div>
+    </div>
+    <div class="award-card">
+      <h4>Strategic Foresight &amp; Futures Explorer</h4>
+      <div class="org">IFRC Solferino Academy — November 2022</div>
+      <a href="https://www.virtualbadge.io/certificate-validator?credential=cer-433e718d-cb4c-4c07-9436-1bbb67b6" target="_blank" rel="noopener">View Badge →</a>
+    </div>
+    <div class="award-card">
+      <h4>ToT — Market-Based Programming for WASH</h4>
+      <div class="org">British Red Cross Society — December 2022</div>
+    </div>
+    <div class="award-card">
+      <h4>Linking Social Protection &amp; Humanitarian CVA</h4>
+      <div class="org">CaLP Network — March 2023</div>
+    </div>
+    <div class="award-card">
+      <h4>Humanitarian Diplomacy &amp; Durable Solutions</h4>
+      <div class="org">Regional Durable Solutions (ReDSS) — March 2023</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REFERENCES ── -->
+<section id="references">
+  <h2 class="section-title">References</h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <h4>Dr. Halima Saado (PhD)</h4>
+      <div class="ref-role">Ag. Vice-Chancellor, UMMA University</div>
+      <p>Nairobi, Kenya</p>
+      <p>+254 710 315 830</p>
+      <a href="mailto:dr.saadoabdillahi@gmail.com">dr.saadoabdillahi@gmail.com</a>
+    </div>
+    <div class="ref-card">
+      <h4>Elijah King'ori</h4>
+      <div class="ref-role">Information Management, IFRC Africa Region</div>
+      <p>Addis Ababa, Ethiopia</p>
+      <p>+254 710 675 544</p>
+      <a href="mailto:elijah.kingori@ifrc.org">elijah.kingori@ifrc.org</a>
+    </div>
+    <div class="ref-card">
+      <h4>Safia Verjee</h4>
+      <div class="ref-role">Executive Director, International Center for Humanitarian Affairs</div>
+      <p>+254 728 679 644</p>
+      <a href="mailto:verjee.safia@redcross.or.ke">verjee.safia@redcross.or.ke</a>
+    </div>
+  </div>
+</section>
+
+</div><!-- .container -->
+</main>
+
+<footer>
+  <p>
+    &copy; 2026 Kiragu M. George &mdash;
+    <a href="mailto:georgemuraya@gmail.com">georgemuraya@gmail.com</a> &middot;
+    <a href="https://linkedin.com/in/george-kiragu" target="_blank" rel="noopener">LinkedIn</a> &middot;
+    <a href="https://github.com/GeorMurk" target="_blank" rel="noopener">GitHub</a>
+  </p>
+</footer>
+
+<script>
+  // Mobile hamburger
+  const btn = document.getElementById('hamburger');
+  const links = document.getElementById('nav-links');
+  btn.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => links.classList.remove('open'))
+  );
+</script>
+</body>
+</html>

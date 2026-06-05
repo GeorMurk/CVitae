@@ -1,2 +1,0 @@
-# CVitae
- Programmed CV's
